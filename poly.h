@@ -16,7 +16,7 @@ typedef struct
 
 polynome* new_polynome(int deg);
 
-polynome* set_coef_polynome(rational c, int d);
+void set_coef_polynome(rational c, int d, polynome* poly);
 
 rational get_coef_polynome(polynome* poly, int d);
 

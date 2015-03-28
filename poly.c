@@ -4,7 +4,7 @@ polynome* new_polynome(int deg)
 {
 	polynome* new_poly = (polynome*)malloc(sizeof(polynome));
 	int i;
-	new_poly->coef = (rational*)malloc(sizeof(rational));
+	new_poly->coef = (rational*)malloc(deg*sizeof(rational));
 
 	for (i = 0; i <= deg; i++)
 	{
@@ -15,12 +15,9 @@ polynome* new_polynome(int deg)
 	return (new_poly);
 }
 
-polynome* set_coef_polynome(rational c, int d)
+void set_coef_polynome(rational c, int d, polynome* poly)
 {
-	polynome* new_poly = new_polynome(K);
-	new_poly->coef[d] = c;
-
-	return new_poly;
+	poly->coef[d] = c;
 }
 
 rational get_coef_polynome(polynome* poly, int d)
@@ -44,10 +41,12 @@ int get_degree_polynome(polynome* poly)
 float eval_polynome(polynome* poly, rational x0)
 {
 	int i;
-	float result_poly = 0.0;
+	float result_poly=0.0;
+	rational x0_power;
 	for (i = 0; i <= poly->deg; i++)
 	{
-		poly->coef[i] = mult_rational(poly->coef[i], power_rational(x0, i));
+		x0_power = power_rational(x0, i);
+		poly->coef[i] = mult_rational(poly->coef[i], x0_power);
 		result_poly += rational_to_float(poly->coef[i]);
 	}
 
@@ -68,14 +67,14 @@ void affiche_polynome(polynome* poly)
 		else
 			printf("(%d/%d)x^%d + ", poly->coef[i].p, poly->coef[i].q, i);
 	}
+	printf("\n");
 }
 
 float dev_lim_ln(rational x, int t)
 {
-	polynome* poly_dev_ln = new_polynome(t);
+	polynome* poly_dev_ln=new_polynome(t);
 	rational one = int_to_rational(1);
 	rational neg_one = int_to_rational(-1);
-	float result;
 	int i;
 	rational j;
 	for (i = 1; i <= t; i++)
@@ -84,16 +83,14 @@ float dev_lim_ln(rational x, int t)
 		{
 			j = new_rational(1, i);
 			j = mult_rational(neg_one, j);
-			poly_dev_ln = set_coef_polynome(j, i);
+			set_coef_polynome(j, i, poly_dev_ln);
 		}
 		else
 		{
 			j = new_rational(1, i);
 			j = mult_rational(one, j);
-			poly_dev_ln = set_coef_polynome(j, i);
+			set_coef_polynome(j, i, poly_dev_ln);
 		}
 	}
-
-	result = eval_polynome(poly_dev_ln, x);
-	return result;
+	return eval_polynome(poly_dev_ln, x);
 }
