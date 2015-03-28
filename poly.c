@@ -48,7 +48,7 @@ float eval_polynome(polynome* poly, rational x0)
 	for (i = 0; i <= poly->deg; i++)
 	{
 		poly->coef[i] = mult_rational(poly->coef[i], power_rational(x0, i));
-		result_poly += (float)rational_to_int(poly->coef[i]);
+		result_poly += rational_to_float(poly->coef[i]);
 	}
 
 	return result_poly;
@@ -82,16 +82,18 @@ float dev_lim_ln(rational x, int t)
 	{
 		if ((i % 2) == 0)
 		{
-			j = new_rational(1,i);
+			j = new_rational(1, i);
 			j = mult_rational(neg_one, j);
-			poly_dev_ln=set_coef_polynome(j, i);
+			poly_dev_ln = set_coef_polynome(j, i);
 		}
 		else
+		{
 			j = new_rational(1, i);
-		j = mult_rational(one, j);
-			poly_dev_ln=set_coef_polynome(j, i);
+			j = mult_rational(one, j);
+			poly_dev_ln = set_coef_polynome(j, i);
+		}
 	}
 
-	result=eval_polynome(poly_dev_ln, x);
+	result = eval_polynome(poly_dev_ln, x);
 	return result;
 }
