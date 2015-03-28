@@ -70,22 +70,28 @@ void affiche_polynome(polynome* poly)
 	}
 }
 
-float dev_lim_ln(rational x)
+float dev_lim_ln(rational x, int t)
 {
+	polynome* poly_dev_ln = new_polynome(t);
+	rational one = int_to_rational(1);
+	rational neg_one = int_to_rational(-1);
+	float result;
 	int i;
-	float result = 0.0;
-	float y = 0.0;
-	float power_one = 1.0;
-	float power = 0.0;
-	for (i = 1; i <= T; i++)
+	rational j;
+	for (i = 1; i <= t; i++)
 	{
-		power_one = (float)(rational_to_float(power_rational(int_to_rational(-1), (i + 1))));
-		power = (rational_to_float(power_rational(x, i)));
-		result += power_one*power / (float)(i);
-		printf("result_deg_%d=%f\n", i, result);
+		if ((i % 2) == 0)
+		{
+			j = new_rational(1,i);
+			j = mult_rational(neg_one, j);
+			poly_dev_ln=set_coef_polynome(j, i);
+		}
+		else
+			j = new_rational(1, i);
+		j = mult_rational(one, j);
+			poly_dev_ln=set_coef_polynome(j, i);
 	}
-	
-	double result_library = log((double)1 + (double)rational_to_float(x));
-	printf("result_math_library=%f\n", result_library);
+
+	result=eval_polynome(poly_dev_ln, x);
 	return result;
 }

@@ -7,7 +7,6 @@
 #include "rational.h"
 
 #define K 10
-#define T 10
 
 typedef struct
 {
@@ -27,6 +26,5 @@ float eval_polynome(polynome* poly, rational x0);
 
 void affiche_polynome(polynome* poly);
 
-float dev_lim_ln(rational x);
-
+float dev_lim_ln(rational x, int t);
 #endif // !_POLY_H_
