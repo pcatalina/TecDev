@@ -31,11 +31,12 @@ int get_degree_polynome(polynome* poly)
 	int i;
 	for (i = 0; i < poly->deg - 1; i++)
 	{
-		if (rational_to_int(poly->coef[i]) < rational_to_int(poly->coef[i + 1]))
+		if (rational_to_int(poly->coef[i])!=0)
 			deg = i + 1;
 	}
 
 	return deg;
+	
 }
 
 float eval_polynome(polynome* poly, rational x0)
@@ -70,27 +71,4 @@ void affiche_polynome(polynome* poly)
 	printf("\n");
 }
 
-float dev_lim_ln(rational x, int t)
-{
-	polynome* poly_dev_ln=new_polynome(t);
-	rational one = int_to_rational(1);
-	rational neg_one = int_to_rational(-1);
-	int i;
-	rational j;
-	for (i = 1; i <= t; i++)
-	{
-		if ((i % 2) == 0)
-		{
-			j = new_rational(1, i);
-			j = mult_rational(neg_one, j);
-			set_coef_polynome(j, i, poly_dev_ln);
-		}
-		else
-		{
-			j = new_rational(1, i);
-			j = mult_rational(one, j);
-			set_coef_polynome(j, i, poly_dev_ln);
-		}
-	}
-	return eval_polynome(poly_dev_ln, x);
-}
+

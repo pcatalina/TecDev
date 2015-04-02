@@ -1,6 +1,7 @@
 #ifndef _RATIONAL_H_
 #define _RATIONAL_H_
 
+#include <stdio.h>
 #include <assert.h>
 #include <math.h>
 

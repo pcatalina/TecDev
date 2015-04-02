@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include<math.h>
 #include "rational.h"
 
 #define K 10
@@ -26,5 +25,4 @@ float eval_polynome(polynome* poly, rational x0);
 
 void affiche_polynome(polynome* poly);
 
-float dev_lim_ln(rational x, int t);
 #endif // !_POLY_H_
